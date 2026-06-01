@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAÍCES · La Experiencia · Shaterany.living</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap');
+  :root{--bg0:#0a0a0f;--bg1:#0f1a12;--bg2:#0d0a1a;--cream:#f0ead6;--gold:#D4A574;--gold-soft:#c4b99a;--green:#74C69D;--blue:#A8DADC;--lav:#E0AAFF;--magenta:#F72585;--muted:#8a8070;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost',sans-serif;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--serif);color:var(--cream);background:linear-gradient(160deg,var(--bg0) 0%,var(--bg1) 45%,var(--bg2) 100%);background-attachment:fixed;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  .stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .star{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--gold);opacity:0.3;animation:twinkle var(--dur,4s) ease-in-out infinite var(--del,0s);}
+  @keyframes twinkle{0%,100%{opacity:0.1;transform:scale(1);}50%{opacity:0.6;transform:scale(1.5);}}
+  .app{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:0 24px;}
+  .screen{display:none;min-height:100vh;flex-direction:column;justify-content:center;padding:72px 0 60px;animation:fadeUp 0.9s ease both;}
+  .screen.active{display:flex;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;}}
+  .kicker{font-family:var(--sans);font-size:11px;letter-spacing:6px;text-transform:uppercase;color:var(--green);margin-bottom:20px;text-align:center;}
+  h1{font-size:clamp(40px,9vw,72px);font-weight:400;line-height:1.05;text-align:center;background:linear-gradient(135deg,var(--cream) 25%,var(--gold) 65%,var(--lav) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;margin-bottom:16px;}
+  .subtitle{text-align:center;font-style:italic;font-size:clamp(16px,3vw,20px);color:var(--gold-soft);line-height:1.6;max-width:480px;margin:0 auto 36px;}
+  .glyph-row{text-align:center;font-size:24px;letter-spacing:14px;opacity:0.5;margin:24px 0;}
+  p.body{font-size:clamp(16px,2.4vw,19px);line-height:1.85;color:var(--gold-soft);text-align:center;max-width:540px;margin:0 auto 22px;}
+  p.body em{color:var(--cream);font-style:italic;}
+  .btn{display:inline-block;font-family:var(--sans);font-size:14px;letter-spacing:1px;cursor:pointer;padding:17px 40px;border-radius:50px;border:none;transition:all 0.3s ease;text-decoration:none;}
+  .btn-primary{background:linear-gradient(135deg,var(--gold),var(--lav));color:var(--bg0);font-weight:500;}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(212,165,116,0.25);}
+  .btn-ghost{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.2);color:var(--cream);}
+  .btn-ghost:hover{background:rgba(255,255,255,0.09);}
+  .btn-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:14px;}
+  .lang-row{display:flex;gap:16px;justify-content:center;margin-top:10px;flex-wrap:wrap;}
+  .lang-btn{font-family:var(--sans);font-size:14px;letter-spacing:2px;padding:15px 36px;border-radius:50px;border:1px solid rgba(212,165,116,0.4);background:rgba(255,255,255,0.03);color:var(--cream);cursor:pointer;transition:all 0.3s;}
+  .lang-btn:hover{background:linear-gradient(135deg,var(--gold),var(--lav));color:var(--bg0);transform:translateY(-3px);}
+  .progress-wrap{position:fixed;top:0;left:0;right:0;z-index:10;padding:18px 24px;background:linear-gradient(180deg,rgba(10,10,15,0.92),transparent);backdrop-filter:blur(4px);}
+  .progress-inner{max-width:680px;margin:0 auto;}
+  .progress-label{font-family:var(--sans);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between;}
+  .progress-track{height:2px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;}
+  .progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--lav));transition:width 0.8s cubic-bezier(0.4,0,0.2,1);}
+  .hidden{display:none !important;}
+  .phase-tag{font-family:var(--sans);font-size:10px;letter-spacing:5px;text-transform:uppercase;text-align:center;margin-bottom:10px;}
+  .phase-num{text-align:center;font-size:13px;letter-spacing:3px;color:var(--muted);margin-bottom:6px;font-family:var(--sans);}
+  .phase-name{text-align:center;font-size:clamp(32px,6vw,48px);font-weight:400;margin-bottom:6px;}
+  .phase-glyph{text-align:center;font-size:42px;margin-bottom:18px;}
+  .phase-desc{text-align:center;font-style:italic;font-size:clamp(15px,2.3vw,18px);line-height:1.7;color:var(--gold-soft);max-width:500px;margin:0 auto 24px;}
+  .confidential{font-family:var(--sans);font-size:11px;color:var(--green);text-align:center;max-width:440px;margin:0 auto 28px;line-height:1.6;opacity:0.9;padding:12px 18px;border:1px solid rgba(116,198,157,0.2);border-radius:10px;background:rgba(116,198,157,0.04);}
+  .question{font-size:clamp(18px,2.8vw,22px);line-height:1.5;color:var(--cream);margin-bottom:8px;text-align:center;}
+  .question-hint{font-family:var(--sans);font-size:12px;color:var(--muted);text-align:center;margin-bottom:16px;}
+  textarea{width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:18px;color:var(--cream);font-family:var(--serif);font-size:17px;line-height:1.6;resize:vertical;min-height:90px;transition:border-color 0.3s;}
+  textarea:focus{outline:none;border-color:var(--accent,var(--gold));}
+  textarea::placeholder{color:var(--muted);opacity:0.5;font-style:italic;}
+  .insight{margin-top:20px;padding:20px 24px;border-radius:14px;border-left:2px solid var(--accent,var(--gold));background:rgba(255,255,255,0.03);font-style:italic;font-size:15px;line-height:1.7;color:var(--gold-soft);display:none;animation:fadeUp 0.7s ease both;}
+  .insight.show{display:block;}
+  .insight-label{font-family:var(--sans);font-style:normal;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent,var(--gold));margin-bottom:8px;display:block;}
+  .science-note{font-family:var(--sans);font-size:11px;color:var(--muted);text-align:center;margin-top:24px;font-style:italic;letter-spacing:0.5px;}
+  .ritual-card{background:linear-gradient(135deg,rgba(212,165,116,0.1),rgba(224,170,255,0.05));border:1px solid rgba(212,165,116,0.3);border-radius:20px;padding:32px 28px;margin:24px 0;}
+  .ritual-step{display:flex;gap:16px;margin-bottom:20px;align-items:flex-start;}
+  .ritual-step:last-child{margin-bottom:0;}
+  .ritual-num{width:34px;height:34px;border-radius:50%;flex-shrink:0;border:1px solid var(--gold);background:rgba(212,165,116,0.1);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:15px;}
+  .ritual-text{font-size:15px;line-height:1.7;color:var(--gold-soft);padding-top:4px;}
+  .ritual-text b{color:var(--lav);font-style:italic;font-weight:400;}
+  .map-entry{border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:20px 22px;margin-bottom:14px;background:rgba(255,255,255,0.02);}
+  .map-phase{font-family:var(--sans);font-size:10px;letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;}
+  .map-q{font-size:14px;color:var(--muted);font-style:italic;margin-bottom:6px;}
+  .map-a{font-size:16px;color:var(--cream);line-height:1.5;}
+  .quote{text-align:center;font-style:italic;font-size:clamp(18px,3vw,24px);line-height:1.8;color:var(--gold-soft);font-weight:300;margin:30px auto;max-width:540px;}
+  .signature{text-align:center;font-size:15px;color:var(--gold);letter-spacing:3px;font-family:var(--sans);}
+  .brand{text-align:center;font-family:var(--sans);font-size:10px;color:var(--muted);letter-spacing:4px;text-transform:uppercase;margin-top:40px;}
+  .umbral-door{text-align:center;font-size:60px;margin:20px 0;opacity:0.6;}
+  .tier{border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:22px 24px;margin-bottom:14px;text-align:left;transition:all 0.3s;}
+  .tier:hover{border-color:rgba(224,170,255,0.4);background:rgba(255,255,255,0.02);}
+  .tier-label{font-family:var(--sans);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--lav);margin-bottom:8px;}
+  .tier-name{font-size:22px;color:var(--cream);margin-bottom:6px;}
+  .tier-desc{font-size:15px;color:var(--gold-soft);font-style:italic;line-height:1.6;margin-bottom:14px;}
+  .tier .btn{padding:12px 28px;font-size:13px;}
+  .waitlist-note{font-family:var(--sans);font-size:12px;color:var(--green);text-align:center;max-width:480px;margin:8px auto 24px;line-height:1.6;padding:12px 18px;border:1px solid rgba(116,198,157,0.2);border-radius:10px;background:rgba(116,198,157,0.04);}
+  .breathe{display:inline-block;animation:breathe 4s ease-in-out infinite;}
+  @keyframes breathe{0%,100%{transform:scale(1);opacity:0.6;}50%{transform:scale(1.15);opacity:1;}}
+  .center{text-align:center;}
+  .mt{margin-top:28px;}
+  .langswitch{position:fixed;top:14px;right:18px;z-index:11;font-family:var(--sans);font-size:11px;letter-spacing:1px;color:var(--muted);cursor:pointer;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:6px 14px;transition:all 0.3s;}
+  .langswitch:hover{color:var(--cream);border-color:var(--gold);}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="langswitch hidden" id="langSwitch" onclick="toggleLang()">ES / EN</div>
+<div class="progress-wrap hidden" id="progressWrap">
+  <div class="progress-inner">
+    <div class="progress-label"><span id="progLabel"></span><span id="progPct">0%</span></div>
+    <div class="progress-track"><div class="progress-bar" id="progBar"></div></div>
+  </div>
+</div>
+<div class="app">
+  <section class="screen active" id="sLang">
+    <div class="kicker">Shaterany.living · La Experiencia</div>
+    <h1>RAÍCES</h1>
+    <div class="glyph-row">✦ ◈ ✦</div>
+    <p class="subtitle">Elige tu idioma · Choose your language</p>
+    <div class="lang-row">
+      <button class="lang-btn" onclick="setLang('es')">Español 🌙</button>
+      <button class="lang-btn" onclick="setLang('en')">English 🌙</button>
+    </div>
+  </section>
+  <section class="screen" id="s0">
+    <div class="kicker" data-t="welcomeKicker"></div>
+    <h1>RAÍCES</h1>
+    <div class="glyph-row">✦ ◈ ✦</div>
+    <p class="subtitle" data-t="welcomeSub"></p>
+    <p class="body" data-t="welcomeBody"></p>
+    <div class="btn-row"><button class="btn btn-primary" data-t="welcomeBtn" onclick="go('s1')"></button></div>
+    <div class="science-note" data-t="scienceFooter"></div>
+  </section>
+  <section class="screen" id="s1">
+    <div class="kicker" data-t="breatheKicker"></div>
+    <h1 style="font-size:clamp(32px,7vw,52px)" data-t="breatheTitle"></h1>
+    <div class="center" style="font-size:80px;margin:30px 0;"><span class="breathe">🌬️</span></div>
+    <p class="body" data-t="breatheBody1"></p>
+    <p class="body" data-t="breatheBody2"></p>
+    <p class="body" style="font-size:15px;color:var(--muted)" data-t="breatheBody3"></p>
+    <div class="confidential" data-t="confidential"></div>
+    <div class="btn-row"><button class="btn btn-primary" data-t="breatheBtn" onclick="go('p1')"></button></div>
+  </section>
+  <div id="phaseContainer"></div>
+  <section class="screen" id="sRitual">
+    <div class="kicker" style="color:var(--magenta)" data-t="ritualKicker"></div>
+    <h1 style="font-size:clamp(32px,7vw,52px)">Maboya</h1>
+    <p class="phase-desc" data-t="ritualDesc"></p>
+    <div class="ritual-card" id="ritualSteps"></div>
+    <div class="btn-row"><button class="btn btn-primary" data-t="ritualBtn" onclick="buildMap();go('sMap')"></button></div>
+  </section>
+  <section class="screen" id="sMap">
+    <div class="kicker" data-t="mapKicker"></div>
+    <h1 style="font-size:clamp(30px,6vw,46px)" data-t="mapTitle"></h1>
+    <p class="phase-desc" data-t="mapDesc"></p>
+    <div id="mapEntries"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" data-t="mapDownload" onclick="downloadMap()"></button>
+      <button class="btn btn-ghost" data-t="mapContinue" onclick="go('sUmbral')"></button>
+    </div>
+  </section>
+  <section class="screen" id="sUmbral">
+    <div class="kicker" data-t="umbralKicker"></div>
+    <div class="umbral-door">🚪</div>
+    <p class="quote" data-t="umbralQuote"></p>
+    <div class="waitlist-note" data-t="waitlistNote"></div>
+    <div style="margin:20px 0;">
+      <div class="tier">
+        <div class="tier-label" data-t="tier1Label"></div>
+        <div class="tier-name" data-t="tier1Name"></div>
+        <div class="tier-desc" data-t="tier1Desc"></div>
+        <a class="btn btn-primary" id="waitlist1" href="#" target="_blank" rel="noopener" data-t="tierBtn"></a>
+      </div>
+      <div class="tier">
+        <div class="tier-label" data-t="tier2Label"></div>
+        <div class="tier-name" data-t="tier2Name"></div>
+        <div class="tier-desc" data-t="tier2Desc"></div>
+        <a class="btn btn-primary" id="waitlist2" href="#" target="_blank" rel="noopener" data-t="tierBtn"></a>
+      </div>
+    </div>
+    <p class="body" style="font-size:15px;" data-t="umbralClose"></p>
+    <div class="btn-row">
+      <a class="btn btn-ghost" href="https://instagram.com/shaterany.living" target="_blank" rel="noopener">@shaterany.living</a>
+      <a class="btn btn-ghost" href="https://shaterany.substack.com/subscribe" target="_blank" rel="noopener" data-t="communityBtn"></a>
+    </div>
+    <div class="signature mt">— Shaterany</div>
+    <div class="brand">Shaterany.living · Método RAÍCES</div>
+  </section>
+</div>
+<script>
+const WAITLIST_URL="https://docs.google.com/forms/d/e/1FAIpQLSej6Y7GBTLjcJe7qRtRR7glzORV1fP2JVqtRxvBRk7Sfh4F3g/viewform";
+(function(){const c=document.getElementById('stars');for(let i=0;i<40;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.setProperty('--dur',(3+Math.random()*4)+'s');s.style.setProperty('--del',(Math.random()*4)+'s');c.appendChild(s);}})();
+const T={
+es:{welcomeKicker:"Shaterany.living · La Experiencia",welcomeSub:"Un descenso guiado a la raíz de lo que vives en tu cuerpo y tu vida. No vas a leer sobre el método — lo vas a vivir.",welcomeBody:"Vas a necesitar 20 minutos, honestidad, y un lugar donde nadie te interrumpa. Al final, te llevas tu propio Mapa RAÍCES.",welcomeBtn:"Comenzar el descenso 🌙",scienceFooter:"Integra epigenética · bioneuroemoción · sabiduría ancestral taína",breatheKicker:"Antes de entrar",breatheTitle:"Respira",breatheBody1:"Pon los pies en la tierra. Inhala en cuatro… sostén… exhala en seis. Tres veces.",breatheBody2:"Esto que vas a hacer es sagrado. No hay respuestas correctas. Solo <em>tu verdad</em>.",breatheBody3:"Cuando estés lista, cruza el umbral.",confidential:"🔒 Tus respuestas son 100% confidenciales. Se quedan solo en tu dispositivo durante esta sesión. Nadie las ve — ni siquiera yo — a menos que tú decidas compartir tu Mapa conmigo al final.",breatheBtn:"Estoy lista ✦",ritualKicker:"Tu Ritual de Liberación",ritualDesc:"No hay sanación sin una nueva elección. Este ritual es solo tuyo — nació de lo que escribiste hoy.",ritualBtn:"Ver mi Mapa RAÍCES 🗺️",ritualSteps:[["Nombra.","Pon una mano donde tu cuerpo habla más fuerte. Di en voz alta: «Te escucho. Sé que cargas algo que no es solo mío.»"],["Honra.","Piensa en la persona de tu familia que vivió algo parecido. Dile: «Honro tu historia. Pero yo elijo diferente.»"],["Suelta.","Respira hondo 4 veces. En cada exhalación suelta una palabra: peso, miedo, lealtad, cansancio."],["Elige.","Completa en voz alta: «Desde hoy, yo elijo ______.» Repítelo cada mañana esta semana."]],mapKicker:"Tu Mapa RAÍCES",mapTitle:"Lo que descubriste",mapDesc:"Este es el mapa de tu descenso. Lo que nombraste hoy ya no vive en la oscuridad.",mapDownload:"📥 Descargar mi Mapa",mapContinue:"Continuar 🌙",umbralKicker:"El Umbral",umbralQuote:"\"Esto fue tu primer descenso a la raíz. Pero hay capas que solo se abren en presencia, en ceremonia, en comunidad.\"",waitlistNote:"🔒 Al unirte a la lista de espera puedes adjuntar tu Mapa RAÍCES. Solo yo lo veo — es 100% confidencial — y me ayuda a prepararme para acompañarte mejor.",tier1Label:"El siguiente paso",tier1Name:"Sesión 1:1 · Reimprontación",tier1Desc:"Volvemos juntas a la escena original donde se grabó el patrón — y le cambiamos la carga. Trabajo profundo, sostenido, en presencia.",tier2Label:"La inmersión",tier2Name:"El Retiro RAÍCES",tier2Desc:"Días de ceremonia, naturaleza, comunidad y sanación ancestral. El templo donde todo se integra.",tierBtn:"Unirme a la lista de espera ✦",umbralClose:"Cuando estés lista para ir más profundo, la puerta está abierta. 🌿",communityBtn:"Únete a la comunidad",insightLabel:"Lo que veo",revealBtn:"Revelar lo que veo ✦",continueBtn:"Continuar →",writePlaceholder:"Escribe con honestidad…",silence:"— en silencio por ahora"},
+en:{welcomeKicker:"Shaterany.living · The Experience",welcomeSub:"A guided descent to the root of what you carry in your body and your life. You won't read about the method — you'll live it.",welcomeBody:"You'll need 20 minutes, honesty, and a place where no one will interrupt you. At the end, you take home your own RAÍCES Map.",welcomeBtn:"Begin the descent 🌙",scienceFooter:"Integrates epigenetics · bio-decoding · Taíno ancestral wisdom",breatheKicker:"Before you enter",breatheTitle:"Breathe",breatheBody1:"Place your feet on the ground. Inhale for four… hold… exhale for six. Three times.",breatheBody2:"What you're about to do is sacred. There are no right answers. Only <em>your truth</em>.",breatheBody3:"When you're ready, cross the threshold.",confidential:"🔒 Your answers are 100% confidential. They stay only on your device during this session. No one sees them — not even me — unless you choose to share your Map with me at the end.",breatheBtn:"I'm ready ✦",ritualKicker:"Your Liberation Ritual",ritualDesc:"There is no healing without a new choice. This ritual is yours alone — born from what you wrote today.",ritualBtn:"See my RAÍCES Map 🗺️",ritualSteps:[["Name it.","Place a hand where your body speaks loudest. Say out loud: \"I hear you. I know you carry something that isn't only mine.\""],["Honor it.","Think of the person in your family who lived something similar. Tell them: \"I honor your story. But I choose differently.\""],["Release.","Breathe deep 4 times. With each exhale, release one word: weight, fear, loyalty, tiredness."],["Choose.","Complete out loud: \"From today, I choose ______.\" Repeat it every morning this week."]],mapKicker:"Your RAÍCES Map",mapTitle:"What you discovered",mapDesc:"This is the map of your descent. What you named today no longer lives in the dark.",mapDownload:"📥 Download my Map",mapContinue:"Continue 🌙",umbralKicker:"The Threshold",umbralQuote:"\"This was your first descent to the root. But there are layers that only open in presence, in ceremony, in community.\"",waitlistNote:"🔒 When you join the waitlist you can attach your RAÍCES Map. Only I see it — it's 100% confidential — and it helps me prepare to hold space for you better.",tier1Label:"The next step",tier1Name:"1:1 Session · Reimprinting",tier1Desc:"Together we return to the original scene where the pattern was recorded — and we change its charge. Deep work, held, in presence.",tier2Label:"The immersion",tier2Name:"The RAÍCES Retreat",tier2Desc:"Days of ceremony, nature, community, and ancestral healing. The temple where everything integrates.",tierBtn:"Join the waitlist ✦",umbralClose:"When you're ready to go deeper, the door is open. 🌿",communityBtn:"Join the community",insightLabel:"What I see",revealBtn:"Reveal what I see ✦",continueBtn:"Continue →",writePlaceholder:"Write honestly…",silence:"— in silence for now"}
+};
+const PHASES={
+es:[{id:'p1',num:'Fase 01',taino:'YUCAHU',name:'Las Raíces',glyph:'🌳',accent:'#D4A574',desc:'Tu dolor no nació contigo — viajó a ti. Empezamos en la historia familiar.',science:'Epigenética transgeneracional — Lipton & Corbera',q:'¿Quién en tu familia vivió algo parecido a lo que tú vives hoy?',hint:'Una abuela, una madre, una tía. El silencio también se hereda.',insight:'Lo que cargas puede ser una lealtad invisible. No viniste a repetir su historia — viniste a honrarla y liberarla.'},{id:'p2',num:'Fase 02',taino:'ATABEY',name:'El Cuerpo Habla',glyph:'🌿',accent:'#74C69D',desc:'Tu cuerpo no miente. Cada síntoma tiene un mensaje.',science:'Decodificación Biológica — Bouron & Vilanova',q:'¿Qué parte de tu cuerpo está hablando más fuerte ahora mismo? ¿Cuándo empezó?',hint:'Agotamiento, tensión, dolor, insomnio. Y qué vivías cuando empezó.',insight:'El cuerpo habla cuando la boca calla. Ese síntoma no es tu enemigo — es un mensajero pidiendo ser escuchado.'},{id:'p3',num:'Fase 03',taino:'GUABANCEX',name:'El Patrón',glyph:'🌀',accent:'#A8DADC',desc:'Lo que se repite, te pertenece. El patrón es el maestro.',science:'Inconsciente y proyección — Bioneuroemoción (Corbera)',q:'¿Qué situación se repite en tu vida una y otra vez?',hint:'En relaciones, dinero, salud, trabajo. Lo que llamas "mala suerte".',insight:'Ese patrón no es castigo. Es una pista. Se repite porque hay algo que todavía no ha sido visto del todo.'},{id:'p4',num:'Fase 04',taino:'JURACÁN',name:'La Tormenta que Sana',glyph:'⚡',accent:'#E0AAFF',desc:'Nombramos el conflicto real — el que la mente ha evitado ver.',science:'Conflicto emocional inconsciente — Bioneuroemoción (Corbera)',q:'¿Qué es lo que más miedo te da admitir sobre todo esto?',hint:'Respira. Lo que puedes ver, lo puedes soltar.',insight:'Acabas de nombrar lo que muchas evitan toda la vida. En una sesión 1:1 entramos a reimprontar esto — pero verlo ya es el primer acto de libertad.'},{id:'p5',num:'Fase 05',taino:'MABOYA',name:'La Elección',glyph:'🦋',accent:'#F72585',desc:'Desde la conciencia de lo visto, eliges diferente.',science:'Epigenética conductual — Lipton + integración ancestral',q:'Si pudieras elegir libremente… ¿cómo querrías sentirte en esta situación?',hint:'No cómo "deberías". Cómo realmente quieres sentirte.',insight:'Esa sensación que nombraste es tu brújula. Tu cuerpo ya sabe hacia dónde quiere ir. Ahora vamos a darle un ritual.'}],
+en:[{id:'p1',num:'Phase 01',taino:'YUCAHU',name:'The Roots',glyph:'🌳',accent:'#D4A574',desc:"Your pain wasn't born with you — it traveled to you. We begin in your family history.",science:'Transgenerational epigenetics — Lipton & Corbera',q:'Who in your family lived something similar to what you live today?',hint:'A grandmother, a mother, an aunt. Silence is inherited too.',insight:"What you carry may be an invisible loyalty. You didn't come to repeat their story — you came to honor it and release it."},{id:'p2',num:'Phase 02',taino:'ATABEY',name:'The Body Speaks',glyph:'🌿',accent:'#74C69D',desc:"Your body doesn't lie. Every symptom carries a message.",science:'Biological Decoding — Bouron & Vilanova',q:'Which part of your body is speaking loudest right now? When did it begin?',hint:'Exhaustion, tension, pain, insomnia. And what you were living when it started.',insight:"The body speaks when the mouth stays quiet. That symptom isn't your enemy — it's a messenger asking to be heard."},{id:'p3',num:'Phase 03',taino:'GUABANCEX',name:'The Pattern',glyph:'🌀',accent:'#A8DADC',desc:'What repeats, belongs to you. The pattern is the teacher.',science:'The unconscious and projection — Bioneuroemoción (Corbera)',q:'What situation repeats in your life, over and over?',hint:'In relationships, money, health, work. What you call "bad luck."',insight:"That pattern isn't punishment. It's a clue. It repeats because something still hasn't been fully seen."},{id:'p4',num:'Phase 04',taino:'JURACÁN',name:'The Storm That Heals',glyph:'⚡',accent:'#E0AAFF',desc:'We name the real conflict — the one the mind has avoided seeing.',science:'Unconscious emotional conflict — Bioneuroemoción (Corbera)',q:'What are you most afraid to admit about all of this?',hint:'Breathe. What you can see, you can release.',insight:'You just named what many avoid their whole lives. In a 1:1 session we enter to reimprint this — but seeing it is already your first act of freedom.'},{id:'p5',num:'Phase 05',taino:'MABOYA',name:'The Choice',glyph:'🦋',accent:'#F72585',desc:"From the awareness of what you've seen, you choose differently.",science:'Behavioral epigenetics — Lipton + ancestral integration',q:'If you could choose freely… how would you want to feel in this situation?',hint:'Not how you "should." How you truly want to feel.',insight:'That feeling you named is your compass. Your body already knows where it wants to go. Now let\'s give it a ritual.'}]
+};
+let lang='es',answers={},order=[];
+function setLang(l){lang=l;document.documentElement.lang=l;answers={};applyTranslations();buildPhases();document.getElementById('langSwitch').classList.remove('hidden');go('s0');}
+function toggleLang(){const cur=document.querySelector('.screen.active').id;setLang(lang==='es'?'en':'es');
+  // try to return to same logical screen
+  if(['s0','s1','sRitual','sMap','sUmbral'].includes(cur)){if(cur==='sMap')buildMap();go(cur);}
+  else{go('s0');}}
+function applyTranslations(){const t=T[lang];document.querySelectorAll('[data-t]').forEach(el=>{const k=el.getAttribute('data-t');if(typeof t[k]==='string')el.innerHTML=t[k];});const rs=document.getElementById('ritualSteps');rs.innerHTML='';t.ritualSteps.forEach((s,i)=>{const d=document.createElement('div');d.className='ritual-step';d.innerHTML='<div class="ritual-num">'+(i+1)+'</div><div class="ritual-text"><b>'+s[0]+'</b> '+s[1]+'</div>';rs.appendChild(d);});document.getElementById('waitlist1').href=WAITLIST_URL;document.getElementById('waitlist2').href=WAITLIST_URL;}
+function buildPhases(){const c=document.getElementById('phaseContainer');c.innerHTML='';order=['sLang','s0','s1'];PHASES[lang].forEach(p=>order.push(p.id));order.push('sRitual','sMap','sUmbral');const t=T[lang];PHASES[lang].forEach(p=>{const sec=document.createElement('section');sec.className='screen';sec.id=p.id;sec.style.setProperty('--accent',p.accent);sec.innerHTML='<div class="phase-tag" style="color:'+p.accent+'">'+p.taino+'</div><div class="phase-num">'+p.num+'</div><div class="phase-glyph">'+p.glyph+'</div><div class="phase-name">'+p.name+'</div><div class="phase-desc">'+p.desc+'</div><div class="question">'+p.q+'</div><div class="question-hint">'+p.hint+'</div><textarea id="ta_'+p.id+'" placeholder="'+t.writePlaceholder+'" style="--accent:'+p.accent+'"></textarea><div class="insight" id="ins_'+p.id+'" style="--accent:'+p.accent+'"><span class="insight-label">'+t.insightLabel+'</span>'+p.insight+'</div><div class="science-note">'+p.science+'</div><div class="btn-row"><button class="btn btn-ghost" id="reveal_'+p.id+'" onclick="reveal(\''+p.id+'\')">'+t.revealBtn+'</button><button class="btn btn-primary hidden" id="next_'+p.id+'" onclick="saveAndNext(\''+p.id+'\')">'+t.continueBtn+'</button></div>';c.appendChild(sec);});}
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});updateProgress(id);}
+function reveal(pid){answers[pid]=document.getElementById('ta_'+pid).value.trim();document.getElementById('ins_'+pid).classList.add('show');document.getElementById('reveal_'+pid).classList.add('hidden');document.getElementById('next_'+pid).classList.remove('hidden');}
+function saveAndNext(pid){const i=order.indexOf(pid);go(order[i+1]);}
+function updateProgress(id){const pw=document.getElementById('progressWrap');const ph=PHASES[lang];const idx=ph.findIndex(p=>p.id===id);const t=T[lang];if(idx>=0){pw.classList.remove('hidden');const pct=Math.round(((idx+1)/ph.length)*100);document.getElementById('progBar').style.width=pct+'%';document.getElementById('progPct').textContent=pct+'%';document.getElementById('progLabel').textContent=ph[idx].name;}else if(['sRitual','sMap','sUmbral'].includes(id)){pw.classList.remove('hidden');document.getElementById('progBar').style.width='100%';document.getElementById('progPct').textContent='100%';document.getElementById('progLabel').textContent=id==='sRitual'?t.ritualKicker:id==='sMap'?t.mapKicker:t.umbralKicker;}else pw.classList.add('hidden');}
+function buildMap(){const wrap=document.getElementById('mapEntries');wrap.innerHTML='';const t=T[lang];PHASES[lang].forEach(p=>{const a=answers[p.id]||'';const div=document.createElement('div');div.className='map-entry';div.innerHTML='<div class="map-phase" style="color:'+p.accent+'">'+p.glyph+' '+p.taino+' · '+p.name+'</div><div class="map-q">'+p.q+'</div><div class="map-a">'+(esc(a)||'<em style="color:#8a8070">'+t.silence+'</em>')+'</div>';wrap.appendChild(div);});}
+function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function downloadMap(){const t=T[lang];let rows='';PHASES[lang].forEach(p=>{const a=esc(answers[p.id]||t.silence);rows+='<div style="border:1px solid #d4a57440;border-radius:12px;padding:18px 20px;margin-bottom:14px;background:#ffffff05;"><div style="font-family:sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:'+p.accent+';margin-bottom:8px;">'+p.glyph+' '+p.taino+' · '+p.name+'</div><div style="font-style:italic;color:#8a8070;font-size:14px;margin-bottom:6px;">'+p.q+'</div><div style="color:#f0ead6;font-size:16px;line-height:1.5;">'+a+'</div></div>';});const title=lang==='es'?'Mi Mapa RAÍCES':'My RAÍCES Map';const sub=lang==='es'?'Mi descenso a la raíz':'My descent to the root';const quote=lang==='es'?'"No vine a darte respuestas que ya tienes.<br>Vine a ayudarte a escuchar lo que tu cuerpo,<br>tu sangre y tus ancestros ya saben."':'"I didn\'t come to give you answers you already have.<br>I came to help you hear what your body,<br>your blood, and your ancestors already know."';const date=new Date().toLocaleDateString(lang==='es'?'es-ES':'en-US',{day:'numeric',month:'long',year:'numeric'});const html='<!DOCTYPE html><html lang="'+lang+'"><head><meta charset="utf-8"><title>'+title+' · Shaterany.living</title><style>@import url(\'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap\');body{font-family:\'Cormorant Garamond\',Georgia,serif;background:linear-gradient(160deg,#0a0a0f,#0f1a12,#0d0a1a);color:#f0ead6;padding:50px 30px;max-width:680px;margin:0 auto;}h1{font-size:48px;font-weight:400;text-align:center;color:#D4A574;margin-bottom:8px;}.sub{text-align:center;font-style:italic;color:#c4b99a;margin-bottom:30px;}.q{text-align:center;font-style:italic;font-size:20px;color:#c4b99a;line-height:1.8;margin:30px 0;}.sig{text-align:center;color:#D4A574;letter-spacing:3px;margin-top:30px;font-family:sans-serif;font-size:13px;}.brand{text-align:center;font-family:sans-serif;font-size:10px;color:#8a8070;letter-spacing:4px;text-transform:uppercase;margin-top:24px;}@media print{body{background:#0a0a0f;-webkit-print-color-adjust:exact;print-color-adjust:exact;}}</style></head><body><h1>'+title+'</h1><div class="sub">'+sub+' · '+date+'</div>'+rows+'<div class="q">'+quote+'</div><div class="sig">— Shaterany</div><div class="brand">Shaterany.living · Método RAÍCES</div><scr'+'ipt>setTimeout(function(){window.print();},600);</scr'+'ipt></body></html>';const blob=new Blob([html],{type:'text/html'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=(lang==='es'?'Mi_Mapa_RAICES':'My_RAICES_Map')+'.html';a.click();setTimeout(function(){URL.revokeObjectURL(url);},2000);window.open(url,'_blank');}
+</script>
+</body>
+</html>
